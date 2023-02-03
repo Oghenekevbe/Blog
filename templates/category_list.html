@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Categories{% endblock title %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row" style='margin-top: 10px;'>
+            <h3 style='text-transform: capitalize;'>Categories</h3>
+            <hr>
+        </div>
+    </div>
+
+
+
+
+        <div class="container">
+            <div>
+                <div class="unau-container">
+
+                    {% if cat_menu %}
+                        
+                            {%if user.is_authenticated %}
+                                <div>
+                                    <a href='{% url 'add_category' %}' class=" text-secondary" style="text-decoration : none;">Add new category</a>
+                                </div>
+
+                                {% for category in cat_menu %}
+                                           
+                                            <ul>
+                                                <li>
+                                                    <a href="{% url 'categories' category|slugify%} " class=" text-dark" style="text-decoration : none;">{{category.name}}</a> </small>
+                                        
+                                                </li>
+                                            </ul>
+                                {% endfor %}
+                                 
+
+                            {% else %}
+                                {% for category in cat_menu %}
+                                        <ul>
+                                            <li>
+                                                <a href="{% url 'categories' category|slugify%} " class=" text-dark" style="text-decoration : none;">{{category.name}}</a> </small>
+                                    
+                                            </li>
+                                        </ul>
+                                {% endfor %}
+
+                            {% endif %}
+
+                        
+                        
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+{% endblock content %}

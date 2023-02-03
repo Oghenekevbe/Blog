@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Login Page{% endblock title %} 
+
+
+{% block content %}
+   
+        
+            
+        
+    
+
+
+    <div class="unau-container">
+        <div class="form-control-group">
+            <p><h3 class=' mb-5'>Login</h></p>
+                <hr>
+            <p><h6 class=' mb-5'>Kindly enter your username and password</h6></p>
+            <div class="form-group">
+                <form action="" method='POST'>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+    
+                 
+                <button class = 'btn btn-secondary'>Login</button>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

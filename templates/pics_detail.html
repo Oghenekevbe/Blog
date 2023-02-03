@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}{{pic.title}}{% endblock title %}
+
+{% block content %}
+
+
+
+    <div>
+        <p>
+            <h4  style="margin-left: 20px;" class="title">Picture of the day...</h4><br>
+            <hr>
+            
+
+            
+        </p>
+    </div>
+
+    {%if user.is_authenticated%}      
+
+    <div class="container">
+        <div class="row">
+            <div class=" full-picture-view">
+                <img src="{{pic.image.url}}" alt="" >
+                <div>
+                    <p>{{pic.title}} <br> <small> by:  {{pic.author}} 
+                        {% if user.is_staff%}
+                        |<a href="{% url 'edit_pic' pic.pk %}">(edit post)</a> | <a href=" {% url 'delete_pic' pic.pk %} ">(delete)</a>
+                        {% endif %}
+                    </small></p>        
+                </div>
+                <form action=" {% url 'like_post' pic.pk %} " method= 'POST'>
+                    {% csrf_token %}
+                    <input type="hidden" name="model_name" value="pic">
+                    {{form.as_p}}
+                    <button type='submit' name='post_id' value='{{pic.pk}}' class='btn btn-primary btn-sm'>{{total_likes}} - Likes</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+        
+   {% else %}             
+        <div  class="unau-container">
+            <p>
+                <h6>Kindly <a href="{% url 'register' %}" class= ' fw-bold'>Sign-up</a> or <a href="{% url 'login' %}" class= ' fw-bold'>login</a> to view the full article</h6>
+            </p>
+            
+        </div>
+
+    {% endif %}
+       
+                    
+                    
+                    
+               
+           
+
+
+
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Category{% endblock title %}
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <div class="form-control-group col-md-6">
+        <div class="form-group">
+            <p><h3 class=' mb-5'>Add Category</h></p>
+                <hr>
+            <form action="" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+            
+            <button type="Submit" class='btn btn-secondary'>Submit</button>
+            <br>
+            <br>
+        </div>
+    </div>
+{% else %}
+<div class="container">
+    <div>
+        <div class="unau-container">
+            <p>
+                <h6>You do not have permission to view this page</h6>
+            </p>
+            
+        </div>
+
+    </div>
+</div>
+{% endif %}
+{% endblock content %}
+

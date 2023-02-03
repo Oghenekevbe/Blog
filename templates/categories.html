@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Categories{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="unau-container">
+        <p><h5>{{ category_post.0.name }}...</h5></p>
+        <div class="container mx-5">
+            <p><h3 class=' mb-5'>Categories</h3></p>
+                <hr>
+            <div class="row">
+                {% if category_post %}
+                    <h6>Blog...</h6>
+                        <ul>
+                            {% for post in category_post %}
+                                <li>
+                                    <a href="{% url 'post_detail' post.pk %}" class=" text-dark">{{ post.title }}</a><br>
+                                    <small>By {{ post.author }} | {{ post.created_at }} </small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                 {% else %}
+                     <div>
+                         <p>
+                             <h6>There are no pictures for this category</h6>
+                         </p>
+                     </div>
+                 {% endif %}
+         
+                 
+         
+                {% if category_pic %}
+                <h6>Pics...</h6>
+                     <ul>
+                         {% for post in category_pic %}
+                             <li>
+                                 <a href="{% url 'pics_detail' post.pk %}" class=" text-dark">{{ post.title }}</a><br>
+                                 <small>By {{ post.author }} | {{ post.created_at }} </small>
+                             </li>
+                         {% endfor %}
+                     </ul>
+                 {% else %}
+                     <div>
+                         <p>
+                             <h6>There are no pictures for this category</h6>
+                         </p>
+                     </div>
+                 {% endif %}
+         
+                {% if category_trend %}
+                <h6>Trend...</h6>
+                     <ul>
+                         {% for post in category_trend %}
+                             <li>
+                                 <a href="{% url 'trending_detail' post.pk %}" class=" text-dark">{{ post.title }}</a><br>
+                                 <small>By {{ post.author }} | {{ post.created_at }} </small>
+                             </li>
+                         {% endfor %}
+                     </ul>
+                 {% else %}
+                     <div>
+                         <p>
+                             <h6>There are no trending posts for this category</h6>
+                         </p>
+                     </div>
+                 {% endif %}
+         
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}

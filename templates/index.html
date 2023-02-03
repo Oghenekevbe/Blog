@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Breathe Lifestyle{% endblock %}
+{% block content %}
+
+
+
+
+		<section>
+
+			<section class="second-hero">
+				<div class="hero-container">
+					
+					{% comment %} TRENDS {% endcomment %}
+					<div class="trends">
+						<div class="container">
+							<div>
+								<p>
+									<h4  style="margin-left: 20px;" class="title">Trending...</h4><br>
+									
+										<div class=' mx-5' style="display: flex;">
+											<a href=" {% url 'trending' %}"  class=" text-secondary" style="text-decoration : none;">See all</a>
+											{% if user.is_staff %}
+											<div style="margin-left: 20px;">
+												<button class='btn btn-primary btn-sm'><a href=" {% url 'add_trending' %} "  class=" text-light" style="text-decoration : none;">Add latest trend</a></button>
+											</div>
+											{% endif %}
+										
+										</div>
+									
+								</p>
+							</div>
+				
+	
+									{% for post in trending|slice:':4' %}
+										<div class="containter">
+											<div class="row">
+												<ul>
+													<li <p><a  href="{% url 'trending_detail' post.pk %}" style='text-decoration: none;' class=' fw-bold text-dark'>{{post.title}}</a></p>
+													<small>{{post.author}} | {{post.created_at}}</small></li>
+													</ul>
+											</div>
+										</div>
+									{% endfor %}
+						</div>
+					</div>
+
+					{% comment %} PIC OF THE DAY {% endcomment %}
+					<div class="potd">
+
+						<div>
+							<p>
+								<h4  style="margin-left: 20px;" class="title">Picture of the Moment...</h4><br>
+								
+									<div class=' mx-5' style="display: flex;">
+										<a href=" {% url 'pics' %} "  class=" text-secondary" style="text-decoration : none;">See all</a>
+										{% if user.is_staff %}
+										<div style="margin-left: 20px;">
+											<button class='btn btn-primary btn-sm'><a href=" {% url 'add_pic' %} "  class=" text-light" style="text-decoration : none;">Add Pic</a></button>
+										</div>
+									{% endif %}
+									</div>
+								
+							</p>
+						</div>
+
+
+						
+							
+						<div class="pic-card">
+							{% if random_pic %}
+								<img src="{{ random_pic.image.url }}" class="card-img-top" alt="{{ random_pic.caption }}">
+								<div class="pic-card-body">
+									<h6 class="pic-card-title">{{ random_pic.title }}</h6>
+									<a href="{% url 'pics_detail' random_pic.pk %}" class="btn btn-primary btn-sm">View</a>
+								</div>
+							
+							{% else %}
+							
+									<p><h5>There is no picture to be displayed</h5></p>
+							{% endif %}
+						</div>
+						
+					</div>
+
+				</div>
+			</section>
+	
+			<hr>
+		
+			<section>
+				<div>
+					<p>
+						<h4  style="margin-left: 20px;" class="title">Recent Blogs...</h4><br>
+						
+							<div class=' mx-5' style="display: flex;">
+								<a href=" {% url 'post_list' %} " class=" text-secondary" style="text-decoration : none;">See all</a>
+								{% if user.is_staff %}
+								<div style="margin-left: 20px;">
+									<button class='btn btn-primary btn-sm'><a href=" {% url 'add_post' %} "  class=" text-light" style="text-decoration : none;">Add Blog Post</a></button>
+								</div>
+								{% endif %}
+
+							</div>
+						
+					</p>
+				</div>
+				
+				<div class="blog-cards">
+					{% for post in Post|slice:':4' %}
+						
+									
+	
+												<div class="card" style="width: 18rem;" >
+													<img src="{{post.image.url}}" class="card-img-top" alt="...">
+													<div class="card-body">
+	
+														<a href="{% url 'post_detail' post.pk %}" class=" text-dark">{{post.title}}</a><br>
+														<small>By {{post.author}} | {{post.created_at}} 
+															
+														</small>
+														<p class="card-text">{{post.body|truncatewords:10|safe}}</p>
+								
+													</div>
+	
+	
+												</div>
+	
+	
+										
+										
+	
+						
+					{% endfor %}
+				</div>
+			</section>
+			
+
+
+			
+
+			
+
+
+		</section>
+
+{% endblock  %}

@@ -1,0 +1,325 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{post.title}}{% endblock title %}
+
+{% block content %}
+
+
+    {% if user.is_authenticated %}
+        
+            <div class="container">
+                <div class="article-container">
+                    <h4>{{post.title}}</h4><br>
+                    <small>By {{post.author}} | {{post.created_at}} | 
+                          
+                        
+                            <a href="{% url 'categories' post.category %}">{{ post.category }}</a>
+                            {% if user.is_staff %}
+                       
+                                | <a href="{% url 'edit_post' post.pk %}">(Edit)</a> | <a href="{% url 'delete_post' post.pk %}">(Delete) </a>
+                            {% endif %}
+                    </small>
+                    <hr>
+                    <img src="{{post.image.url}}" alt="" class='detail-image'>
+                    <p class="card-text">{{post.body|safe}}</p>
+
+                </div>
+            </div>
+
+       
+        <div class="container">
+            <div class="row">
+                <form action=" {% url 'like_post' post.pk %} " method= 'POST'>
+                    {% csrf_token %}
+                    <input type="hidden" name="model_name" value="post">
+                    {{form.as_p}}
+                    <button type='submit' name='post_id' value='{{post.pk}}' class='btn btn-primary btn-sm'>{{total_likes}} - Likes</button>
+                </form>
+
+            
+            </div>
+        </div>
+
+
+
+    {% else %}
+            <div class="container">
+                <div class="unau-container">
+                    <div class="container">
+                        <div class="article-container">
+                            <h4>{{post.title}}</h4><br>
+                            <small>By {{post.author}} | {{post.created_at}} </small>
+                            <hr>
+        
+                        </div>
+                    </div>
+
+                    <div>
+                        <p>
+                            <h6>Kindly <a href="{% url 'register' %}" class= ' fw-bold'>Sign-up</a> or <a href="{% url 'login' %}" class= ' fw-bold'>login</a> to view the full article</h6>
+                        </p>
+                        
+                    </div>
+            
+                </div>
+            </div>
+    
+    {% endif %}
+    
+    
+
+
+    {% if user.is_authenticated%}
+        <div class="container">
+            <div class="row">
+                <div class="card  mb-3"  id= 'comment-card'>
+                    <div class="card-header"><a href="{% url 'create_comment' post.pk %}" class=" text-secondary fw-bold" style="text-decoration : none;">Add a comment</a></div>
+                    <div class="card-body">
+        
+                    {% comment %} comments {% endcomment %}
+        
+                        <section>
+                
+                            <div class="container">
+                                
+                        
+                                {% if post.comments %}        
+                                    
+                                        {% for comment in post.comments.all %}
+                                                <ul class="comment">
+                                                    
+                                                    <li><small class=' fw-bold'>By: {{ comment.author }} | {{ comment.created_at }} </small>
+                                                    <p>{{ comment.text }} | <a href="{% url 'create_reply' pk=post.pk comment_pk=comment.pk %}" class=" text-secondary" style="text-decoration : none;">Reply...</a></p></li>
+                                                    
+                                                        
+                                                    
+                                                </ul>
+                                
+                                
+                                                {% comment %} replies {% endcomment %}
+                                
+                                
+                                                
+                                                    <div class="container mx-5">
+                                                        <div class="row">
+                                                            
+                                                                {% if comment.replies %}
+                                                            
+                                                                        {% for reply in comment.replies.all %}
+                                                                            <small class=' fw-bold'>{{ reply.author }} | {{ reply.created_at }}</small>
+                                                                            <p><small>{{ reply.text }}</small></p>
+                                                                            
+                                                                        {% endfor %}
+                                                        
+                                
+                                                                {% else %}
+                                        
+                                                                    <a href="{% url 'create_reply' pk=post.pk comment_pk=comment.pk %}" class=" text-secondary" style="text-decoration : none;">Reply...</a>
+                                        
+                                                                {% endif %}
+                                                        </div>
+                                        
+                                                            
+                                                    </div>
+                                    
+                                                
+                                
+                                
+                                
+                                
+                                        {% endfor %}
+                        
+                                {% else %}
+                                    <p><h5>No comments available for this post</h5></p>
+                                    <small> <a href="{% url 'create_comment' post.pk %}">Add a comment</a></small>
+                            
+                                            
+                                {% endif %} 
+                            </div>
+                        </section>
+                        
+        
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+       <div class="container">
+        <div class="row">
+            <div class="card  mb-3"  id= 'comment-card'>
+                <div class="card-header"><h6>Comments</h6>
+                </div>
+                <div class="card-body">
+    
+                    {% comment %} comments {% endcomment %}
+    
+                    <section>
+            
+                        <div class="container">
+                            
+                    
+                            {% if post.comments %}        
+                                
+                                    {% for comment in post.comments.all %}
+                                            <ul class="comment">
+                                                
+                                                <li><small class=' fw-bold'>By: {{ comment.author }} | {{ comment.created_at }} </small>
+                                                <p>{{ comment.text }} 
+                                                
+                                                    
+                                                
+                                            </ul>
+                            
+                            
+                                            {% comment %} replies {% endcomment %}
+                            
+                            
+                                            
+                                                <div class="container mx-5">
+                                                    <div class="row">
+                                                        
+                                                            {% if comment.replies %}
+                                                        
+                                                                    {% for reply in comment.replies.all %}
+                                                                        <small class=' fw-bold'>{{ reply.author }} | {{ reply.created_at }}</small>
+                                                                        <p><small>{{ reply.text }}</small></p>
+                                                                        
+                                                                    {% endfor %}
+                                                    
+                            
+                                                            
+                                    
+                                                            {% endif %}
+                                                    </div>
+                                    
+                                                        
+                                                </div>
+                                
+                                            
+                            
+                            
+                            
+                            
+                                    {% endfor %}
+                    
+                            {% else %}
+    
+                                <p><h5>No comments available for this post</h5></p>
+                                
+                        
+                                        
+                            {% endif %} 
+                        </div>
+    
+                    </section>
+                    
+    
+    
+                </div>
+            </div>
+        </div>
+       </div>
+
+
+    {% endif %}
+      
+
+                       
+    {% comment %} author's profile    {% endcomment %}
+
+    <div class="container" id='non-mobile-profile'>
+        <div class="row">
+            <div class="card mb-3" style="max-width: 540px;" id = 'profile-card'>
+                <div class="row g-1">
+                    <div class="col-md-3">
+
+                        <div class='profile-pic'>
+                            {% if post.author.profile.profile_pic %}
+                            <img src="{{post.author.profile.profile_pic.url}}" class="rounded" alt="..." width='100' height = '100'>
+                        {% else %}
+                            <img src="{% static 'img/default_image.jpg' %}" class="rounded" alt="..." width='100' height = '100'>
+                        {% endif %}
+                        </div>
+                    </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <div class="profile-wrap">
+                        <h5 class="card-title">{{post.author}}</h5>
+                        <p class="card-text"><small class="text-muted">
+                        <div class="profile-links">
+                            <ul style='display:flex;'>
+                                {% if post.author.profile.website_url  %}
+                                    <li><a href="{% url 'author_profile' post.author.profile.id %}">Profile</a></li>
+                                {% endif %}
+                                {% if post.author.profile.twitter_url  %}
+                                    <li><a href="{{post.author.profile.twitter_url}}">|Twitter</a></li>
+                                {% endif %}
+                                {% if post.author.profile.instagram_url  %}
+                                    <li><a href="{{post.author.profile.instagram_url}}">|Instagram</a></li>
+                                {% endif %}
+                                {% if post.author.profile.linkedin_url  %}
+                                    <li><a href="{{post.author.profile.linkedin_url}}">|Linkedin</a></li>
+                                {% endif %}
+                                
+                            </ul>
+                        </div>
+                      </small></p>
+                      </div>
+                      <p class="card-text" id='prof-bio'>{{post.author.profile.bio}}</p>
+                      
+                    </div>
+
+                    
+
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+                            
+    <div class="container">
+        <div class="row">
+            <div class="mobile-profile">
+                <hr>
+                <div class='mobile-profile-pic'>
+                    {% if post.author.profile.profile_pic %}
+                    <img src="{{post.author.profile.profile_pic.url}}" class="rounded" alt="..." width='100' height = '100'>
+                {% else %}
+                    <img src="{% static 'img/default_image.jpg' %}" class="rounded" alt="..." width='100' height = '100'>
+                {% endif %}
+                </div>
+                <h5>{{post.author}}</h5>
+                <p class="card-text"><small class="text-muted">
+                    <div class="mobile-profile-links">
+                        <ul style='display:flex;'>
+                            {% if post.author.profile.website_url  %}
+                                <li><a href="{% url 'author_profile' post.author.profile.id %}">Profile</a></li>
+                            {% endif %}
+                            {% if post.author.profile.twitter_url  %}
+                                <li><a href="{{post.author.profile.twitter_url}}">|Twitter</a></li>
+                            {% endif %}
+                            {% if post.author.profile.instagram_url  %}
+                                <li><a href="{{post.author.profile.instagram_url}}">|Instagram</a></li>
+                            {% endif %}
+                            {% if post.author.profile.linkedin_url  %}
+                                <li><a href="{{post.author.profile.linkedin_url}}">|Linkedin</a></li>
+                            {% endif %}
+                            
+                        </ul>
+                    </div>
+                    <p class="card-text" >{{post.author.profile.bio}}</p>
+        
+            </div>                 
+         
+        </div>
+    </div>
+                            
+                        
+   
+
+   
+
+
+{% endblock content %}

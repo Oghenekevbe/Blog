@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Pictures{% endblock title %}
+
+{% block content %}
+
+<div class="potd">
+
+    <div>
+        <p>
+            <h4  style="margin-left: 20px;" class="title">Picture of the day...</h4><br>
+            <hr>
+            
+                {% if user.is_staff %}
+                    <div style="margin-left: 20px;">
+                        <button class='btn btn-primary btn-sm'><a href=" {% url 'add_pic' %} "  class=" text-light" style="text-decoration : none;">Add a Picture</a></button>
+                    </div>
+                {% endif %}
+            
+        </p>
+    </div>
+
+
+    <section class='disp-pic'>
+        <div class="pic-container">
+            {% for item in potd %}
+                {% if item.image %}
+                      
+                                <div class="potd-card ">
+                                    <img src="{{item.image.url}}" alt="" >
+                                    <p>{{item.title}}</p>
+                                    <p><a href="{% url 'pics_detail' item.pk %}"><button class='btn btn-secondary btn-sm'>view</button></a></p>
+                                </div>
+                          
+                       
+                {% endif %}
+            {% endfor %}
+        </div>
+    
+    </section>
+  
+
+</div>
+
+
+{% endblock content %}

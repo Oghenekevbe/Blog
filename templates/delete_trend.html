@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% block title %}Delete Trend{% endblock title %}
+
+<div class="container">
+    <div>
+        <div class="unau-container">
+            <p><h3 class=' mb-5'>Delete</h></p>
+                <hr>
+            <p>
+                <h5>Are you sure you want to <strong class=' text-danger'>Delete</strong> "{{trending.title}}"?</h5>            
+            </p>
+            <form action="" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+
+                <button class='btn btn-secondary'>Delete</button>
+            
+        </div>
+
+    </div>
+</div>
+
+  
+{% endblock content %}

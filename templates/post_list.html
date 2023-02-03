@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Breathe Lifestyle{% endblock %}
+{% block content %}
+
+<div>
+	<p>
+		<h3  style="margin-left: 20px;" class="title">Blog Posts...</h3>
+		<hr>
+		{% if user.is_staff %}
+			<div style="margin-left: 20px;">
+				<button class='btn btn-primary btn-sm'><a href=" {% url 'add_post' %} "  class=" text-light" style="text-decoration : none;">Add Blog Post</a></button>
+			</div>
+		{% endif %}
+	</p>
+	
+	<div class="blog-cards">
+
+
+		{% for post in Post %}
+			
+			
+							
+					<div class="card" style="width: 18rem;" >
+						<img src="{{post.image.url}}" class="card-img-top" alt="...">
+						<div class="card-body">
+
+							<a href="{% url 'post_detail' post.pk|slugify%}" class=" text-dark">{{post.title}}</a><br>
+							<small>By {{post.author}} | {{post.created_at}}
+								{% if user.is_staff %}
+									| <a href="{% url 'edit_post' post.pk %}">(Edit)</a> | <a href="{% url 'delete_post' post.pk %}">(Delete) </a>
+								{% endif %}
+							</small>
+							<p class="card-text">{{post.body|truncatewords:10|safe}}</p>
+	
+						</div>
+
+
+					</div>
+			
+		{% endfor %}
+
+
+
+
+	
+	
+
+	
+
+	  
+
+
+
+
+
+</div>
+	
+	
+{% endblock  %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Author Profile{% endblock title %}
+
+{{page_user.user}}
+
+{% block content %}
+
+    <div class="container">
+        <div class="unau-container">
+            <p><h3 class=' mb-5'>Author Profile</h3></p>
+            
+            <div class="author-card" >
+                <div class='author-pic'>
+                    {% if page_user.profile_pic %}
+                        <img src="{{page_user.profile_pic.url}}" class="rounded" alt="..." width='100' height = '100'>
+                    {% else %}
+                        <img src="{% static 'img/default_image.jpg' %}" class="rounded" alt="..." width='100' height = '100'>
+                    {% endif %}
+                </div>    
+                <div class="card-body">
+                    <h5 class="card-title">{{page_user.user}}</h5>
+                    <small> 
+                        <div class="profile-links">
+                                <ul style='display:flex;'>
+                                    {% if page_user.website_url  %}
+                                        <li><a href="#" class=' text-muted'>Profile</a></li>
+                                    {% endif %}
+                                    {% if page_user.twitter_url  %}
+                                        <li><a href="{{page_user.twitter_url}}"> | Twitter</a></li>
+                                    {% endif %}
+                                    {% if page_user.instagram_url  %}
+                                        <li><a href="{{page_user.instagram_url}}"> | Instagram</a></li>
+                                    {% endif %}
+                                    {% if page_user.linkedin_url  %}
+                                        <li><a href="{{page_user.linkedin_url}}"> | Linkedin</a></li>
+                                    {% endif %}
+                                    
+                                </ul>
+                        </div>
+                    </small>
+
+                    <hr>
+                    <p class="card-text">{{page_user.bio}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
