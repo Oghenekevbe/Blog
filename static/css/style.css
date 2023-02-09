@@ -524,7 +524,9 @@ span h6 {
 
 	}
 
-
+	.trends {
+        margin-left: 20px;
+    }
 	.pic-container {
 		display: block !important;
 	}

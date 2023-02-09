@@ -94,7 +94,7 @@ class AddTrendingForm(forms.ModelForm):
         }
 
 
-class RegisterForm(forms.ModelForm):
+class RegisterForm(UserCreationForm):
     username = forms.CharField(max_length=255, widget= forms.TextInput(attrs={'class':'form-control'}),required=True,)
     password1 = forms.CharField(max_length=255, widget= forms.PasswordInput(attrs={'class':'form-control', 'type': 'password'}),required=True,)
     password2 = forms.CharField(max_length=255, widget= forms.PasswordInput(attrs={'class':'form-control', 'type': 'password'}),required=True,)

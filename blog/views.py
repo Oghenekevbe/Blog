@@ -317,7 +317,7 @@ class Reply(ListView):
 ''' views for user credentials'''
     
 class UserRegister(CreateView):
-    form_class = RegisterForm
+    form_class = UserCreationForm
     template_name = 'registration/register.html'
     success_url = reverse_lazy('login')
 
