@@ -62,7 +62,7 @@ class EditTrend(StaffRequiredMixin,UpdateView):
     template_name = 'edit_trend.html'
     form_class = AddTrendingForm
     
-class DeleteTrend(DeleteView):
+class DeleteTrend(StaffRequiredMixin,DeleteView):
     model = Trending
     template_name = 'delete_trend.html'
     success_url = reverse_lazy('index')
@@ -100,7 +100,7 @@ class EditPic(StaffRequiredMixin,UpdateView):
         return redirect('pics.html')
 
 
-class DeletePic(DeleteView):
+class DeletePic(StaffRequiredMixin,DeleteView):
     model = Pic
     template_name = 'delete_pic.html'
     success_url = reverse_lazy('index')
@@ -158,7 +158,7 @@ class PostList(ListView):
     def get_queryset(self):
         return self.model.objects.all().order_by('-created_at')
     
-class AddPost(CreateView):
+class AddPost(StaffRequiredMixin,CreateView):
     model = Post
     form_class = PostForm
     template_name = 'add_post.html'
@@ -189,21 +189,18 @@ class EditPost(StaffRequiredMixin,UpdateView):
     form_class = PostForm
     template_name = 'edit_post.html'
             
-class DeletePost(DeleteView):
+class DeletePost(StaffRequiredMixin, DeleteView):
     model = Post
     template_name = 'delete_post.html'
     form_class = PostForm
     success_url = reverse_lazy('index')
     
-class AddCategory(CreateView):
+class AddCategory(StaffRequiredMixin,CreateView):
     model = Category
     form_class = AddCategoryForm
     template_name = 'add_category.html'
     
     
-# def CategoryView(request, cats):
-#     category_post = Post.objects.filter(category = cats)
-#     return render(request,'categories.html', {'cats':cats.title(), 'category_post' : category_post})
 
 class CategoryView(ListView):
     model = Category

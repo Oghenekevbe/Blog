@@ -44,7 +44,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default = datetime.now, blank= True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name = 'post_category', default = 'uncategorized')
-    image = models.ImageField(null= True, blank = True)
+    image = models.ImageField(null= False, blank = False)
     body = RichTextField()
     status = models.IntegerField(choices=STATUS,default=0)
     order = models.IntegerField(default=0)
