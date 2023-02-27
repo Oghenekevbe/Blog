@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from .models import Post, Category, Comment, Reply, Trending, Pic, Profile
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
@@ -265,7 +265,7 @@ def LikeView(request, pk):
 
     
 
-class CreateComment(CreateView):
+class CreateComment(LoginRequiredMixin,CreateView):
     model = Comment
     form_class = CreateCommentForm
     template_name = 'create_comment.html'
@@ -283,7 +283,7 @@ class Comments(ListView):
     
     
 
-class CreateReply(CreateView):
+class CreateReply(LoginRequiredMixin,CreateView):
     model = Reply
     form_class = CreateReplyForm
     template_name = 'create_reply.html'
