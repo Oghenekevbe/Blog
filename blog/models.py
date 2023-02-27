@@ -66,7 +66,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name = 'comments',on_delete=models.CASCADE)
-    author = models.CharField(max_length=255)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default='anonymous')
     text = models.TextField()
     created_at = models.DateTimeField( auto_now_add=True)
     
@@ -80,7 +80,7 @@ class Comment(models.Model):
     
 class Reply(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='replies')    
-    author = models.CharField(max_length=255)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default='anonymous')
     text = models.TextField()
     created_at = models.DateTimeField( auto_now_add=True)
     
